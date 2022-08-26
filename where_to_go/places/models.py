@@ -10,3 +10,9 @@ class Place(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Image(models.Model):
+    image = models.ImageField()
+    place = models.ForeignKey(Place, models.SET_NULL, null=True)
+    number = models.PositiveIntegerField()
