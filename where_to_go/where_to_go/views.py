@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from places.models import Place
 
@@ -35,4 +35,15 @@ def get_geojson():
 
 def get_place_info(request, place_id):
     place = get_object_or_404(Place, pk=place_id)
-    return HttpResponse(place.title)
+    images = place.images.all()
+    place_dict = {
+        'title': place.title,
+        'imgs': [img.image.url for img in images],
+        'description_short': place.description_short,
+        'description_long': place.description_long,
+        'coordinates': {
+            'lng': place.longitude,
+            'lat': place.latitude,
+        }
+    }
+    return JsonResponse(place_dict)

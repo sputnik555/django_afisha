@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Place(models.Model):
     title = models.CharField(max_length=200)
@@ -14,5 +15,5 @@ class Place(models.Model):
 
 class Image(models.Model):
     image = models.ImageField()
-    place = models.ForeignKey(Place, models.SET_NULL, null=True)
+    place = models.ForeignKey(Place, models.SET_NULL, null=True, related_name='images')
     number = models.PositiveIntegerField()
