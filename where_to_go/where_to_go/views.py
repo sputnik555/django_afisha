@@ -36,7 +36,7 @@ def get_geojson():
 
 def get_place_info(request, place_id):
     place = get_object_or_404(Place, pk=place_id)
-    images = place.images.all().order_by('number')
+    images = place.images.all().order_by('order')
     place_dict = {
         'title': place.title,
         'imgs': [img.image.url for img in images],

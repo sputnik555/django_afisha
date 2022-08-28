@@ -16,4 +16,11 @@ class Place(models.Model):
 class Image(models.Model):
     image = models.ImageField()
     place = models.ForeignKey(Place, models.SET_NULL, null=True, related_name='images')
-    number = models.PositiveIntegerField()
+    order = models.PositiveIntegerField(
+        default=0,
+        blank=False,
+        null=False,
+    )
+
+    class Meta:
+        ordering = ['order']
