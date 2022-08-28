@@ -1,5 +1,6 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from places.models import Place
 
 
@@ -22,7 +23,7 @@ def get_geojson():
                 "properties": {
                     "title": place.title,
                     "placeId": place.id,
-                    "detailsUrl": "static/places/roofs24.json"
+                    "detailsUrl": reverse(get_place_info, args=[place.id])
                 }
             }
         )
