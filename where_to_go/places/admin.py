@@ -26,3 +26,8 @@ class ImageInline(SortableStackedInline):
 @admin.register(Place)
 class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     inlines = [ImageInline]
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    fields = ('image', 'place')

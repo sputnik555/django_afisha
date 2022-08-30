@@ -1,3 +1,8 @@
-Django~=4.1
-django-admin-sortable2~=2.1.2
-environs~=9.5.0
+Django
+django-admin-sortable2
+environs
+django-tinymce
+pillow
+requests
+lxml
+beautifulsoup4
