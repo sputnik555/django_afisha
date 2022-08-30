@@ -35,7 +35,7 @@ python3 manage.py load_place
 
 ### Демонстрационная копия сайта
 https://sputnik555.pythonanywhere.com/
-
+![image](https://user-images.githubusercontent.com/79382246/187556064-1f6cc865-4658-4e74-bf84-e6dbfa82f28e.png)
 ## Цели проекта
 
 Код написан в учебных целях — это урок в курсе по Python и веб-разработке на сайте [Devman](https://dvmn.org).
