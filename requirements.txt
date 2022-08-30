@@ -5,3 +5,4 @@ django-tinymce
 pillow
 requests
 lxml
+beautifulsoup4
