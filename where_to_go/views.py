@@ -47,4 +47,4 @@ def get_place_info(request, place_id):
             'lat': place.latitude,
         }
     }
-    return JsonResponse(place_dict)
+    return JsonResponse(place_dict, json_dumps_params={'ensure_ascii': False})
