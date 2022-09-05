@@ -10,6 +10,7 @@
 - `DEBUG` — дебаг-режим. Поставьте True, чтобы увидеть отладочную информацию в случае ошибки ([документация](https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-DEBUG)).
 - `SECRET_KEY` — секретный ключ проекта ([документация](https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-SECRET_KEY))
 - `ALLOWED_HOSTS` - список хостов, с которых разрешено подключение [документация](https://docs.djangoproject.com/en/4.1/ref/settings/#allowed-hosts).
+- `STATIC_ROOT` - путь к директории, в которую будет собрана статика при деплое прокта [документация](https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-STATIC_ROOT).
 
 ### Как установить
 
@@ -25,6 +26,11 @@ python manage.py migrate
 Теперь можно запустить сервер
 ```bash
 python3 manage.py runserver
+```
+При выполнении деплоя проекта на сервер, необходимо указать в параметре окружения `STATIC_ROOT` каталог для сбора статики
+и выполнить комманду
+```bash
+python3 manage.py collectstatic
 ```
 
 ### Интерфейс администратора
