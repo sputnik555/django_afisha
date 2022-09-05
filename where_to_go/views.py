@@ -5,13 +5,13 @@ from places.models import Place
 
 
 def render_main_page(request):
-    context = {'geo_json': get_geojson()}
+    places = Place.objects.all()
+    context = {'geo_json': get_geodata(places)}
     return render(request, 'index.html', context)
 
 
-def get_geojson():
+def get_geodata(places):
     features = []
-    places = Place.objects.all()
     for place in places:
         features.append(
             {
@@ -27,11 +27,11 @@ def get_geojson():
                 }
             }
         )
-    geo_json = {
+    geo_data = {
         "type": "FeatureCollection",
         "features": features,
     }
-    return geo_json
+    return geo_data
 
 
 def get_place_info(request, place_id):
