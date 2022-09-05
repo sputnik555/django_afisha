@@ -28,5 +28,11 @@ class Image(models.Model):
         default=0
     )
 
+    def __str__(self):
+        if self.place:
+            return '{} [{}]'.format(self.image, self.place.title)
+        else:
+            return str(self.image)
+
     class Meta:
         ordering = ['order']
