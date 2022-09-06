@@ -11,40 +11,43 @@ URL = 'https://github.com/devmanorg/where-to-go-places/tree/master/places'
 
 
 def add_place_in_db(place_data):
-    if not Place.objects.filter(title=place_data['title']):
-        place = Place(
-            title=place_data['title'],
-            description_short=place_data['description_short'],
-            description_long=place_data['description_long'],
-            latitude=place_data['coordinates']['lat'],
-            longitude=place_data['coordinates']['lng']
+    place, _ = Place.objects.get_or_create(
+        title=place_data['title'],
+        defaults={
+            'description_short': place_data['description_short'],
+            'description_long': place_data['description_long'],
+            'latitude': place_data['coordinates']['lat'],
+            'longitude': place_data['coordinates']['lng'],
+        }
+    )
+
+    for image in place.images.all():
+        image.image.delete()
+        image.delete()
+
+    for img_order, image_url in enumerate(place_data['imgs']):
+        response = requests.get(image_url)
+        response.raise_for_status()
+        Image.objects.update_or_create(
+            image=basename(image_url),
+            defaults={
+                'image': ContentFile(response.content, name=basename(image_url)),
+                'place': place,
+                'order': img_order
+            }
         )
-        place.save()
-        img_order = 0
-        for image_url in place_data['imgs']:
-            response = requests.get(image_url)
-            response.raise_for_status()
-            content = ContentFile(response.content)
-            image = Image()
-            image.image.save(basename(image_url), content, save=False)
-            image.place = place
-            image.order = img_order
-            image.save()
-            img_order += 1
-    else:
-        print('уже есть')
 
 
 def get_place_urls():
     try:
-        response = requests.get(url)
+        response = requests.get(URL)
         response.raise_for_status()
     except (requests.HTTPError, requests.ConnectTimeout, requests.ConnectionError):
         print('Ошибка при загрузке данных')
         exit()
     soup = get_soap(URL)
     a_tags = soup.select("div.py-2 a.js-navigation-open")
-    place_urls = [urllib.parse.urljoin(url, a_tag['href']) for a_tag in a_tags]
+    place_urls = [urllib.parse.urljoin(URL, a_tag['href']) for a_tag in a_tags]
     return place_urls
 
 
