@@ -69,7 +69,18 @@ def get_soap(url):
 
 
 class Command(BaseCommand):
+    help = 'Скрипт загрузки данных в JSON-формате в базу данных'
+
+    def add_arguments(self, parser):
+        parser.add_argument('url', nargs='?', help='URL *.json файла для загрузки')
+
     def handle(self, *args, **options):
+        if options['url']:
+            response = requests.get(options['url'])
+            response.raise_for_status()
+            add_place_in_db(response.json())
+            return
+
         for place_url in get_place_urls():
             try:
                 response = requests.get(get_place_raw_url(place_url))
