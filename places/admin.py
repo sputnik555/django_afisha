@@ -10,17 +10,7 @@ class ImageInline(SortableStackedInline):
     readonly_fields = ['preview']
 
     def preview(self, obj):
-        if obj.image.width > 200:
-            width = 200
-            height = obj.image.height * (200 / obj.image.width)
-        else:
-            width = obj.image.width
-            height = obj.image.height
-        return format_html('<img src="{url}" width="{width}" height={height} />'.format(
-            url=obj.image.url,
-            width=width,
-            height=height)
-        )
+        return format_html('<img src="{}" style="max-height: 200px"/>'.format(obj.image.url))
 
 
 @admin.register(Place)
