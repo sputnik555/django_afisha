@@ -39,12 +39,8 @@ def add_place_in_db(place_data):
 
 
 def get_place_urls():
-    try:
-        response = requests.get(URL)
-        response.raise_for_status()
-    except (requests.HTTPError, requests.ConnectTimeout, requests.ConnectionError):
-        print('Ошибка при загрузке данных')
-        exit()
+    response = requests.get(URL)
+    response.raise_for_status()
     soup = get_soap(URL)
     a_tags = soup.select("div.py-2 a.js-navigation-open")
     place_urls = [urllib.parse.urljoin(URL, a_tag['href']) for a_tag in a_tags]
@@ -59,12 +55,8 @@ def get_place_raw_url(place_url):
 
 
 def get_soap(url):
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-    except (requests.HTTPError, requests.ConnectTimeout, requests.ConnectionError):
-        print('Ошибка при загрузке данных')
-        exit()
+    response = requests.get(url)
+    response.raise_for_status()
     return BeautifulSoup(response.text, 'lxml')
 
 
@@ -82,10 +74,6 @@ class Command(BaseCommand):
             return
 
         for place_url in get_place_urls():
-            try:
-                response = requests.get(get_place_raw_url(place_url))
-                response.raise_for_status()
-            except (requests.HTTPError, requests.ConnectTimeout, requests.ConnectionError):
-                print('Ошибка при загрузке данных')
-                exit()
+            response = requests.get(get_place_raw_url(place_url))
+            response.raise_for_status()
             add_place_in_db(response.json())
