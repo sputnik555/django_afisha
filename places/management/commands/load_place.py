@@ -11,7 +11,7 @@ URL = 'https://github.com/devmanorg/where-to-go-places/tree/master/places'
 
 
 def add_place_in_db(place_data):
-    place, _ = Place.objects.get_or_create(
+    place, created = Place.objects.get_or_create(
         title=place_data['title'],
         defaults={
             'description_short': place_data['description_short'],
@@ -20,10 +20,9 @@ def add_place_in_db(place_data):
             'longitude': place_data['coordinates']['lng'],
         }
     )
-
-    for image in place.images.all():
-        image.image.delete()
-        image.delete()
+    if not created:
+        print('Object "{}" already exist'.format(place_data['title']))
+        return
 
     for img_order, image_url in enumerate(place_data['imgs']):
         response = requests.get(image_url)
