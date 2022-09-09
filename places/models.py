@@ -12,6 +12,10 @@ class Place(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['title'], name='unique_title')
+        ]
 
 class Image(models.Model):
     image = models.ImageField(verbose_name='Картинка')
