@@ -45,12 +45,10 @@ python3 manage.py createsuperuser
 Для этого необходимо выбрать сущность (Places или Images) и далее нажать кнопку "Add place"/"Add image" 
 ![image](https://user-images.githubusercontent.com/79382246/188517208-09151d3c-0584-4150-b0e8-b80df34aa5e6.png)
 
-### Тестовые данные
-Сайт можно наполнить тестовыми данными из сервиса [KudaGo](https://kudago.com/), для этого необходимо выполнить команду
-```bash
-python3 manage.py load_place
-```
-Для загрузки произвольного файла, можно указать URL в параметре команды
+### Импорт данных
+
+В базу данных сайта можно загружать данные из файлов в формате JSON, для этого необходимо выполнить скрипт load_place, указав
+URL файла в качестве аргумента:
 ```bash
 python3 manage.py load_place https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/places/Японский%20сад.json
 ```
